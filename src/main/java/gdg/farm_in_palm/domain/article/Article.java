@@ -14,7 +14,10 @@ public class Article {
     private Long id;
 
     private String articleTitle;
+
+    @Column(length = 50000)
     private String articleContent;
+
     private String articleDate;
     private String articleImagePath;
 

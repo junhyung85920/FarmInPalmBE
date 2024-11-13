@@ -1,7 +1,9 @@
 package gdg.farm_in_palm.domain.article.dto;
 
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class ArticleInfoResDTO {
     private Long articleId;
     private String articleTitle;
