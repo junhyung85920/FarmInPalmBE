@@ -20,7 +20,7 @@ public class ArticleController {
 
     // 모든 Article 조회
     @GetMapping
-    public List<ArticleInfoResDTO> getAllArticles() {
+    public List<ArticleInfoResDTO> getAllArticles() throws IOException {
         return articleService.getAllArticles();
     }
 
