@@ -5,7 +5,6 @@ import gdg.farm_in_palm.domain.article.dto.ArticleInfoResDTO;
 import gdg.farm_in_palm.domain.article.repository.ArticleRepository;
 import gdg.farm_in_palm.exception.CustomException;
 import gdg.farm_in_palm.exception.ErrorCode;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,7 +27,9 @@ public class ArticleService {
     private static String Article_URL = "https://www.nongmin.com/list/20?page=";
 
     // 모든 Article 조회
-    public List<ArticleInfoResDTO> getAllArticles() {
+    public List<ArticleInfoResDTO> getAllArticles() throws IOException {
+        // crawling 먼저 하고 조회
+
         List<Article> articles = articleRepository.findAll();
         List<ArticleInfoResDTO> articleInfoResDTOs = new ArrayList<>();
 
@@ -63,15 +64,22 @@ public class ArticleService {
     }
 
     // url로부터 article crawl
-    @PostConstruct
+    //@PostConstruct
+    @Transactional
     public List<ArticleInfoResDTO> crawlArticles() throws IOException {
         List<ArticleInfoResDTO> articleInfoResDTOs = new ArrayList<>();
+
+        int id_cnt = 1;
 
         Document document;
         Document innerDocument;
 
         Elements contents;
         Element innerElement;
+
+        // article table 내용 삭제
+        //articleRepository.deleteAll();
+        articleRepository.deleteAllInBatch();
 
         // 1~5페이지 크롤링
         for(int i=1; i<=5; i++) {
@@ -82,6 +90,7 @@ public class ArticleService {
                 innerElement = innerDocument.selectFirst("input.siteViewContent");
 
                 Article article = Article.builder()
+                        .id((long) id_cnt++)
                         .articleTitle(content.select("pre.tit").text())
                         .articleContent(innerElement.attr("value"))
                         .articleDate(content.select("pre.data").text())
@@ -91,6 +100,7 @@ public class ArticleService {
                 articleRepository.save(article);
 
                 ArticleInfoResDTO articleInfoResDTO = ArticleInfoResDTO.builder()
+                        .articleId(article.getId())
                         .articleTitle(article.getArticleTitle())
                         .articleContent(article.getArticleContent())
                         .articleDate(article.getArticleDate())
