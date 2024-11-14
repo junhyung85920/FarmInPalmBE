@@ -1,0 +1,45 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: junhyung85920/farminpalm
+          stage: main
+          yaml: >
+            name: farminpalmserver
+
+            app: java@17
+
+            options:
+              ports: "8080"
+              env:
+                - name: DB_DRIVER
+                  value: org.mariadb.jdbc.Driver
+                - name: DB_PASSWORD
+                  value: farminpalm
+                - name: DB_URL
+                  value: jdbc:mariadb://svc.sel4.cloudtype.app:30783/farm-in-palm?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useUnicode=true
+                - name: DB_USER
+                  value: root
+                - name: JWT_SECRET
+                  value: 135f4b6b3179c532eae87f105498f0441e61d6c9890dd5dd3248554c16640fd34e75c8d46a0631b0bda0c6fd45ad0e12f8b6f307f843e0f502a257d60b6ce626
+              buildenv: []
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
