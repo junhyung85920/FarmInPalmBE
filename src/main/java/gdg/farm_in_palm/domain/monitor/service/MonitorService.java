@@ -92,12 +92,11 @@ public class MonitorService {
     // streaming (static folder에 저장된 video stream)
     public ResponseEntity<ResourceRegion> streamVideo(HttpHeaders headers) throws IOException {
 
-        // String path = URL + "/test.mp4";
-        String path = "https://github.com/user-attachments/assets/998295a8-8aa2-4fb6-b133-a02ee069134c";
+        String path = URL + "/test.mp4";
 
         ResourceRegion region;
-        //Resource resource = new FileSystemResource(path);
-        Resource resource = new UrlResource(path);
+        Resource resource = new FileSystemResource(path);
+        // Resource resource = new UrlResource(path);
 
         long chunkSize = 1024 * 1024;
         long contentLength = resource.contentLength();
