@@ -144,7 +144,7 @@ public class WeatherService {
                 .groundHumidity(.3f)
                 .rainGauge(20)
                 .rainAmount(rainamount)
-                .co2Concentration(0.04f)
+                .co2Concentration(400.6f)
                 .build();
 
         weatherRepository.save(weather);
