@@ -8,10 +8,13 @@ import gdg.farm_in_palm.domain.monitor.repository.MonitorRepository;
 import gdg.farm_in_palm.exception.CustomException;
 import gdg.farm_in_palm.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +26,8 @@ public class MonitorService {
     private final MonitorRepository monitorRepository;
 
     // 모든 Monitor 조회
-    public List<MonitorInfoResDTO> getAllMonitors() {
-        List<Monitor> monitors = monitorRepository.findAll();
+    public List<MonitorInfoResDTO> getAllMonitorsByUserId(Long userId) {
+        List<Monitor> monitors = monitorRepository.findByUserId(userId);
         List<MonitorInfoResDTO> monitorInfoResDTOs = new ArrayList<>();
 
         for (Monitor monitor : monitors) {
@@ -80,5 +83,30 @@ public class MonitorService {
         return SuccessResDTO.builder()
                 .success(true)
                 .build();
+    }
+
+    // streaming
+    public ResponseEntity<FileSystemResource> streamVideo(String videoName, HttpHeaders headers) throws IOException {
+
+        File videoFile = new File("/Users/junhyung85920/Downloads/" + videoName);
+        long fileSize = videoFile.length();
+        List<HttpRange> ranges = headers.getRange();
+
+        if (!ranges.isEmpty()) {
+            HttpRange range = ranges.get(0);
+            long start = range.getRangeStart(fileSize);
+            long end = range.getRangeEnd(fileSize);
+            FileSystemResource resource = new FileSystemResource(videoFile);
+
+            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+                    .header(HttpHeaders.CONTENT_RANGE, "bytes " + start + "-" + end + "/" + fileSize)
+                    .contentLength(end - start + 1)
+                    .body(resource);
+        } else {
+            return ResponseEntity.ok()
+                    .contentLength(fileSize)
+                    .contentType(MediaType.parseMediaType("video/mp4"))
+                    .body(new FileSystemResource(videoFile));
+        }
     }
 }

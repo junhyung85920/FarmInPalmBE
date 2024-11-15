@@ -35,5 +35,4 @@ public class ArticleController {
     public List<ArticleInfoResDTO> crawlArticles() throws IOException {
         return articleService.crawlArticles();
     }
-
 }
