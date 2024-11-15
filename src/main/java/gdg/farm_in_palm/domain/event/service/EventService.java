@@ -5,6 +5,7 @@ import gdg.farm_in_palm.domain.event.Event;
 import gdg.farm_in_palm.domain.event.dto.EventInfoReqDTO;
 import gdg.farm_in_palm.domain.event.dto.EventInfoResDTO;
 import gdg.farm_in_palm.domain.event.repository.EventRepository;
+import gdg.farm_in_palm.domain.user.repository.UserRepository;
 import gdg.farm_in_palm.exception.CustomException;
 import gdg.farm_in_palm.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final UserRepository userRepository;
 
     // 모든 Event 조회
     public List<EventInfoResDTO> getAllEventsByUserId(Long userId) {
@@ -61,6 +63,7 @@ public class EventService {
     @Transactional
     public EventInfoResDTO createEvent(EventInfoReqDTO eventInfoReqDTO) {
         Event event = Event.builder()
+                .user(userRepository.findById(1L).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND)))
                 .eventTitle(eventInfoReqDTO.getEventTitle())
                 .eventStartDate(eventInfoReqDTO.getEventStartDate())
                 .eventStartDay(eventInfoReqDTO.getEventStartDay())

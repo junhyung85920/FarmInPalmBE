@@ -5,6 +5,7 @@ import gdg.farm_in_palm.domain.stock.Stock;
 import gdg.farm_in_palm.domain.stock.dto.StockInfoReqDTO;
 import gdg.farm_in_palm.domain.stock.dto.StockInfoResDTO;
 import gdg.farm_in_palm.domain.stock.repository.StockRepository;
+import gdg.farm_in_palm.domain.user.repository.UserRepository;
 import gdg.farm_in_palm.exception.CustomException;
 import gdg.farm_in_palm.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 public class StockService {
 
     private final StockRepository stockRepository;
+    private final UserRepository userRepository;
 
     // 모든 Stock 조회
     public List<StockInfoResDTO> getAllStocksByUserId(Long userId) {
@@ -57,6 +59,8 @@ public class StockService {
     @Transactional
     public StockInfoResDTO createStock(StockInfoReqDTO stockInfoReqDTO) {
         Stock stock = Stock.builder()
+                .user(userRepository.findById(1L)
+                        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND)))
                 .stockName(stockInfoReqDTO.getStockName())
                 .stockQuantity(stockInfoReqDTO.getStockQuantity())
                 .stockUnit(stockInfoReqDTO.getStockUnit())

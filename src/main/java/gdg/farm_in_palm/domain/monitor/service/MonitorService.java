@@ -5,6 +5,7 @@ import gdg.farm_in_palm.domain.monitor.Monitor;
 import gdg.farm_in_palm.domain.monitor.dto.MonitorInfoReqDTO;
 import gdg.farm_in_palm.domain.monitor.dto.MonitorInfoResDTO;
 import gdg.farm_in_palm.domain.monitor.repository.MonitorRepository;
+import gdg.farm_in_palm.domain.user.repository.UserRepository;
 import gdg.farm_in_palm.exception.CustomException;
 import gdg.farm_in_palm.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class MonitorService {
 
     private final MonitorRepository monitorRepository;
+    private final UserRepository userRepository;
     private final String URL = "src/main/resources/static";
 
     // 모든 Monitor 조회
@@ -70,6 +72,7 @@ public class MonitorService {
     @Transactional
     public MonitorInfoResDTO createMonitor(MonitorInfoReqDTO monitorInfoReqDTO) {
         Monitor monitor = Monitor.builder()
+                .user(userRepository.findById(1L).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND)))
                 .monitorName(monitorInfoReqDTO.getMonitorName())
                 .temperature(21.4F)
                 .humidity(68.8F)
