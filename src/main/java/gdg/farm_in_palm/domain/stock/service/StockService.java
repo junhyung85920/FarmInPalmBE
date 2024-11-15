@@ -31,6 +31,7 @@ public class StockService {
                     .stockId(stock.getId())
                     .stockName(stock.getStockName())
                     .stockQuantity(stock.getStockQuantity())
+                    .stockUnit(stock.getStockUnit())
                     .build();
 
             stockInfoResDTOs.add(stockInfoResDTO);
@@ -48,6 +49,7 @@ public class StockService {
                 .stockId(stock.getId())
                 .stockName(stock.getStockName())
                 .stockQuantity(stock.getStockQuantity())
+                .stockUnit(stock.getStockUnit())
                 .build();
     }
 
@@ -57,6 +59,7 @@ public class StockService {
         Stock stock = Stock.builder()
                 .stockName(stockInfoReqDTO.getStockName())
                 .stockQuantity(stockInfoReqDTO.getStockQuantity())
+                .stockUnit(stockInfoReqDTO.getStockUnit())
                 .build();
 
         stockRepository.save(stock);
@@ -65,6 +68,7 @@ public class StockService {
                 .stockId(stock.getId())
                 .stockName(stock.getStockName())
                 .stockQuantity(stock.getStockQuantity())
+                .stockUnit(stock.getStockUnit())
                 .build();
     }
 
@@ -76,6 +80,7 @@ public class StockService {
 
         stock.setStockName(stockInfoReqDTO.getStockName());
         stock.setStockQuantity(stockInfoReqDTO.getStockQuantity());
+        stock.setStockUnit(stockInfoReqDTO.getStockUnit());
 
         stockRepository.save(stock);
 
@@ -83,6 +88,7 @@ public class StockService {
                 .stockId(stock.getId())
                 .stockName(stock.getStockName())
                 .stockQuantity(stock.getStockQuantity())
+                .stockUnit(stock.getStockUnit())
                 .build();
     }
 

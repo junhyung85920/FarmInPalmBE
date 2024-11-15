@@ -10,6 +10,7 @@ import gdg.farm_in_palm.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -91,10 +92,12 @@ public class MonitorService {
     // streaming (static folder에 저장된 video stream)
     public ResponseEntity<ResourceRegion> streamVideo(HttpHeaders headers) throws IOException {
 
-        String path = URL + "/test.mp4";
+        // String path = URL + "/test.mp4";
+        String path = "https://github.com/user-attachments/assets/998295a8-8aa2-4fb6-b133-a02ee069134c";
 
         ResourceRegion region;
-        Resource resource = new FileSystemResource(path);
+        //Resource resource = new FileSystemResource(path);
+        Resource resource = new UrlResource(path);
 
         long chunkSize = 1024 * 1024;
         long contentLength = resource.contentLength();
