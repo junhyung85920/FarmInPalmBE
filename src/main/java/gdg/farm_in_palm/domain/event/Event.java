@@ -12,7 +12,7 @@ import lombok.*;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="block_id")
+    @Column(name="event_id")
     private Long id;
 
     private String eventTitle;
