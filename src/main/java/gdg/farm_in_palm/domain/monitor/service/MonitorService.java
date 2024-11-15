@@ -92,12 +92,12 @@ public class MonitorService {
     public ResponseEntity<ResourceRegion> streamVideo(HttpHeaders headers) throws IOException {
 
         String path = URL + "/test.mp4";
+        ResourceRegion region;
         Resource resource = new FileSystemResource(path);
 
         long chunkSize = 1024 * 1024;
         long contentLength = resource.contentLength();
 
-        ResourceRegion region;
 
         try {
             HttpRange httpRange = headers.getRange().stream().findFirst().get();
