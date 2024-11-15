@@ -19,12 +19,12 @@ public class Weather {
     private Float humidity;
     private Float groundTemperature;
     private Float groundHumidity;
-    private Integer co2Concentration;
+    private Float co2Concentration;
     private Integer rainGauge;
     private Integer rainAmount;
 
     @Builder
-    public Weather(Long id, String weatherDate, Float temperature, Float humidity, Float groundTemperature, Float groundHumidity, Integer co2Concentration, Integer rainGauge, Integer rainAmount) {
+    public Weather(Long id, String weatherDate, Float temperature, Float humidity, Float groundTemperature, Float groundHumidity, Float co2Concentration, Integer rainGauge, Integer rainAmount) {
         this.id = id;
         this.weatherDate = weatherDate;
         this.temperature = temperature;
