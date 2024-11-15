@@ -1,9 +1,7 @@
 package gdg.farm_in_palm.domain.monitor.dto;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 public class MonitorInfoResDTO {
