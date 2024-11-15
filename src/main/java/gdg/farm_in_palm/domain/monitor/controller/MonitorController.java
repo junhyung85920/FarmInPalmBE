@@ -5,11 +5,11 @@ import gdg.farm_in_palm.domain.monitor.dto.MonitorInfoReqDTO;
 import gdg.farm_in_palm.domain.monitor.dto.MonitorInfoResDTO;
 import gdg.farm_in_palm.domain.monitor.service.MonitorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.support.ResourceRegion;
+import org.springframework.http.HttpHeaders;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -37,11 +37,10 @@ public class MonitorController {
         return monitorService.deleteMonitor(monitorId);
     }
 
-    // streaming
-    @GetMapping(value = "/stream/{videoName}", produces = "video/mp4")
-    public ResponseEntity<FileSystemResource> streamVideo(
-            @PathVariable String videoName, @RequestHeader HttpHeaders headers) throws IOException {
-        return monitorService.streamVideo(videoName, headers);
+    // streaming (static folder에 저장된 video stream)
+    @RequestMapping(value = "/stream", method = RequestMethod.GET)
+    public ResponseEntity<ResourceRegion> streamVideo(@RequestHeader HttpHeaders headers) throws Exception {
+        return monitorService.streamVideo(headers);
     }
 
 }
