@@ -8,6 +8,7 @@ import gdg.farm_in_palm.domain.monitor.repository.MonitorRepository;
 import gdg.farm_in_palm.exception.CustomException;
 import gdg.farm_in_palm.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -95,8 +96,9 @@ public class MonitorService {
         String path = URL + "/test.mp4";
 
         ResourceRegion region;
-        Resource resource = new FileSystemResource(path);
+        // Resource resource = new FileSystemResource(path);
         // Resource resource = new UrlResource(path);
+        Resource resource = new ClassPathResource("static/test.mp4");
 
         long chunkSize = 1024 * 1024;
         long contentLength = resource.contentLength();
