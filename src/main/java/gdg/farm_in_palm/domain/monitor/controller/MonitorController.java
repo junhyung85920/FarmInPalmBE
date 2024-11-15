@@ -25,6 +25,12 @@ public class MonitorController {
         return monitorService.getAllMonitorsByUserId(userId);
     }
 
+    // 특정 Monitor 조회
+    @GetMapping("/detail/{monitorId}")
+    public MonitorInfoResDTO getMonitorById(@PathVariable("monitorId") Long monitorId) {
+        return monitorService.getMonitorById(monitorId);
+    }
+
     // Monitor 생성
     @PostMapping("/detail")
     public MonitorInfoResDTO createMonitor(@RequestBody MonitorInfoReqDTO monitorInfoReqDTO) {

@@ -9,9 +9,7 @@ import gdg.farm_in_palm.exception.CustomException;
 import gdg.farm_in_palm.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -50,6 +48,22 @@ public class MonitorService {
         }
 
         return monitorInfoResDTOs;
+    }
+
+    // 특정 Monitor 조회
+    public MonitorInfoResDTO getMonitorById(Long monitorId) {
+        Monitor monitor = monitorRepository.findById(monitorId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MONITOR_NOT_FOUND));
+
+        return MonitorInfoResDTO.builder()
+                .monitorId(monitor.getId())
+                .monitorName(monitor.getMonitorName())
+                .temperature(monitor.getTemperature())
+                .humidity(monitor.getHumidity())
+                .groundTemperature(monitor.getGroundTemperature())
+                .groundHumidity(monitor.getGroundHumidity())
+                .co2Concentration(monitor.getCo2Concentration())
+                .build();
     }
 
     // Monitor 생성
