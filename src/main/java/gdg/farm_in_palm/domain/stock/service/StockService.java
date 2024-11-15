@@ -22,8 +22,8 @@ public class StockService {
     private final StockRepository stockRepository;
 
     // 모든 Stock 조회
-    public List<StockInfoResDTO> getAllStocks() {
-        List<Stock> stocks = stockRepository.findAll();
+    public List<StockInfoResDTO> getAllStocksByUserId(Long userId) {
+        List<Stock> stocks = stockRepository.findByUserId(userId);
         List<StockInfoResDTO> stockInfoResDTOs = new ArrayList<>();
 
         for (Stock stock : stocks) {
@@ -37,6 +37,18 @@ public class StockService {
         }
 
         return stockInfoResDTOs;
+    }
+
+    // Stock 조회
+    public StockInfoResDTO getStockById(Long stockId) {
+        Stock stock = stockRepository.findById(stockId)
+                .orElseThrow(() -> new CustomException(ErrorCode.STOCK_NOT_FOUND));
+
+        return StockInfoResDTO.builder()
+                .stockId(stock.getId())
+                .stockName(stock.getStockName())
+                .stockQuantity(stock.getStockQuantity())
+                .build();
     }
 
     // Stock 생성

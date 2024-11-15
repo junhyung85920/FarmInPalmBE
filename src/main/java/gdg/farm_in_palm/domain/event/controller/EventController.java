@@ -17,32 +17,32 @@ public class EventController {
     private final EventService eventService;
 
     // 모든 Event 조회
-    @GetMapping
-    public List<EventInfoResDTO> getAllEvents() {
-        return eventService.getAllEvents();
+    @GetMapping("/{userId}")
+    public List<EventInfoResDTO> getAllEventsByUserId(@PathVariable("userId") Long userId) {
+        return eventService.getAllEventsByUserId(userId);
     }
 
     // 특정 Event 조회
-    @GetMapping("/{eventId}")
-    public EventInfoResDTO getEventById(Long eventId) {
+    @GetMapping("/detail/{eventId}")
+    public EventInfoResDTO getEventById(@PathVariable("eventId") Long eventId) {
         return eventService.getEventById(eventId);
     }
 
     // Event 생성
-    @PostMapping
-    public EventInfoResDTO createEvent(EventInfoReqDTO eventInfoReqDTO) {
+    @PostMapping("/detail")
+    public EventInfoResDTO createEvent(@RequestBody EventInfoReqDTO eventInfoReqDTO) {
         return eventService.createEvent(eventInfoReqDTO);
     }
 
     // Event 수정
-    @PutMapping
-    public EventInfoResDTO updateEvent(Long eventId, EventInfoReqDTO eventInfoReqDTO) {
+    @PutMapping("/detail/{eventId}")
+    public EventInfoResDTO updateEvent(@PathVariable("eventId") Long eventId, @RequestBody EventInfoReqDTO eventInfoReqDTO) {
         return eventService.updateEvent(eventId, eventInfoReqDTO);
     }
 
     // Event 삭제
-    @DeleteMapping("/{eventId}")
-    public SuccessResDTO deleteEvent(Long eventId) {
+    @DeleteMapping("/detail/{eventId}")
+    public SuccessResDTO deleteEvent(@PathVariable("eventId") Long eventId) {
         return eventService.deleteEvent(eventId);
     }
 }

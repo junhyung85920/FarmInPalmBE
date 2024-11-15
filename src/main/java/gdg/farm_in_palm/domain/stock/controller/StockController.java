@@ -4,7 +4,6 @@ import gdg.farm_in_palm.domain.common.dto.SuccessResDTO;
 import gdg.farm_in_palm.domain.stock.dto.StockInfoReqDTO;
 import gdg.farm_in_palm.domain.stock.dto.StockInfoResDTO;
 import gdg.farm_in_palm.domain.stock.service.StockService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,25 +17,31 @@ public class StockController {
     private final StockService stockService;
 
     // 모든 Stock 조회
-    @GetMapping
-    public List<StockInfoResDTO> getAllStocks() {
-        return stockService.getAllStocks();
+    @GetMapping("/{userId}")
+    public List<StockInfoResDTO> getAllStocksByUserId(@PathVariable("userId") Long userId) {
+        return stockService.getAllStocksByUserId(userId);
+    }
+
+    // Stock 조회
+    @GetMapping("/detail/{stockId}")
+    public StockInfoResDTO getStockById(@PathVariable("stockId") Long stockId) {
+        return stockService.getStockById(stockId);
     }
 
     // Stock 생성
-    @PostMapping
-    public StockInfoResDTO createStock(StockInfoReqDTO stockInfoReqDTO) {
+    @PostMapping("/detail")
+    public StockInfoResDTO createStock(@RequestBody StockInfoReqDTO stockInfoReqDTO) {
         return stockService.createStock(stockInfoReqDTO);
     }
 
     // Stock 수정
-    @PutMapping("/{stockId}")
-    public StockInfoResDTO updateStock(@PathVariable("stockId") Long stockId, StockInfoReqDTO stockInfoReqDTO) {
+    @PutMapping("/detail/{stockId}")
+    public StockInfoResDTO updateStock(@PathVariable("stockId") Long stockId, @RequestBody StockInfoReqDTO stockInfoReqDTO) {
         return stockService.updateStock(stockId, stockInfoReqDTO);
     }
 
     // Stock 삭제
-    @DeleteMapping("/{stockId}")
+    @DeleteMapping("/detail/{stockId}")
     public SuccessResDTO deleteStock(@PathVariable("stockId") Long stockId) {
         return stockService.deleteStock(stockId);
     }

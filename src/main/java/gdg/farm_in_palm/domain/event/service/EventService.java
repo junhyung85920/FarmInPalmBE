@@ -22,8 +22,8 @@ public class EventService {
     private final EventRepository eventRepository;
 
     // 모든 Event 조회
-    public List<EventInfoResDTO> getAllEvents() {
-        List<Event> events = eventRepository.findAll();
+    public List<EventInfoResDTO> getAllEventsByUserId(Long userId) {
+        List<Event> events = eventRepository.findByUserId(userId);
         List<EventInfoResDTO> eventInfoResDTOs = new ArrayList<>();
 
         for (Event event : events) {
