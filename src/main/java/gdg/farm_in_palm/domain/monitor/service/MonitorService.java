@@ -92,6 +92,7 @@ public class MonitorService {
     public ResponseEntity<ResourceRegion> streamVideo(HttpHeaders headers) throws IOException {
 
         String path = URL + "/test.mp4";
+
         ResourceRegion region;
         Resource resource = new FileSystemResource(path);
 
