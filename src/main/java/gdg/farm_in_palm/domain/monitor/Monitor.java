@@ -19,7 +19,7 @@ public class Monitor {
     private Float humidity;
     private Float groundTemperature;
     private Float groundHumidity;
-    private Integer co2Concentration;
+    private Float co2Concentration;
     private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,7 +27,7 @@ public class Monitor {
     private User user;
 
     @Builder
-    public Monitor(Long id, String monitorName, Float temperature, Float humidity, Float groundTemperature, Float groundHumidity, Integer co2Concentration, String date, User user) {
+    public Monitor(Long id, String monitorName, Float temperature, Float humidity, Float groundTemperature, Float groundHumidity, Float co2Concentration, String date, User user) {
         this.id = id;
         this.monitorName = monitorName;
         this.temperature = temperature;

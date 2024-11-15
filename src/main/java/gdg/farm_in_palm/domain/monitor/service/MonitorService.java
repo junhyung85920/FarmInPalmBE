@@ -55,11 +55,11 @@ public class MonitorService {
     public MonitorInfoResDTO createMonitor(MonitorInfoReqDTO monitorInfoReqDTO) {
         Monitor monitor = Monitor.builder()
                 .monitorName(monitorInfoReqDTO.getMonitorName())
-                .temperature(monitorInfoReqDTO.getTemperature())
-                .humidity(monitorInfoReqDTO.getHumidity())
-                .groundTemperature(monitorInfoReqDTO.getGroundTemperature())
-                .groundHumidity(monitorInfoReqDTO.getGroundHumidity())
-                .co2Concentration(monitorInfoReqDTO.getCo2Concentration())
+                .temperature(21.4F)
+                .humidity(68.8F)
+                .groundTemperature(13.7F)
+                .groundHumidity(35.5F)
+                .co2Concentration(0.04F)
                 .build();
 
         monitorRepository.save(monitor);
