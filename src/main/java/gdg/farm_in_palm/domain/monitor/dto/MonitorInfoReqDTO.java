@@ -7,9 +7,4 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MonitorInfoReqDTO {
     private String monitorName;
-    private Float temperature;
-    private Float humidity;
-    private Float groundTemperature;
-    private Float groundHumidity;
-    private Integer co2Concentration;
 }
