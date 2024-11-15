@@ -7,5 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StockInfoReqDTO {
     private String stockName;
-    private Integer stockQuantity;
+    private Float stockQuantity;
+    private String stockUnit;
 }

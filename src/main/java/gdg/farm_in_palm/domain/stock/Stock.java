@@ -15,17 +15,21 @@ public class Stock {
     private Long id;
 
     private String stockName;
-    private Integer stockQuantity;
+    private Float stockQuantity;
+    private String stockUnit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
     @Builder
-    public Stock(Long id, String stockName, Integer stockQuantity, User user) {
+    public Stock(Long id, String stockName, Float stockQuantity, String stockUnit, User user) {
         this.id = id;
         this.stockName = stockName;
         this.stockQuantity = stockQuantity;
+        this.stockUnit = stockUnit;
         this.user = user;
     }
+
+
 }
